@@ -11,10 +11,12 @@ class RoundController < ApplicationController
     redirect_to action: "draft", id: params[:name]
   end
 
+  # dashboard
   def show
     @round = Round.find(params[:id])
   end
 
+  # drafting stocks
   def draft
     @round = Round.find(params[:id])
   end

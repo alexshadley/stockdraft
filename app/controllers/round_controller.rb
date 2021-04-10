@@ -11,11 +11,11 @@ class RoundController < ApplicationController
     redirect_to action: "draft", id: params[:name]
   end
 
-  def show
+  def draft
     @round = Round.find(params[:id])
   end
 
-  def draft
+  def show
     @round = Round.find(params[:id])
   end
 end

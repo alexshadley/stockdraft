@@ -17,6 +17,7 @@ class RoundController < ApplicationController
   # drafting stocks
   def draft
     @round = Round.find(params[:id])
+    @users = User.where(round_id: @round.round_id)
     @tickers = Tickers.get_tickers
   end
 end

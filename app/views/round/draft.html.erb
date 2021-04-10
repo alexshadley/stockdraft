@@ -1,3 +1,4 @@
+
 <div class="container">
 
   <% if not @users.map{ |u| u.session_id }.include? session.id.to_s %>
@@ -6,7 +7,7 @@
     </div>
 
     <div class="row justify-content-center">
-      <%= form_with data: { reflex: "submit->DraftReflex#newUser" } do |form| %>
+      <%= form_with data: { reflex: "submit->DraftReflex#new_user" } do |form| %>
         <%= form.text_field :name, placeholder: "name"%>
         <button type="submit" class="btn btn-primary">Join</button>
       <% end %>

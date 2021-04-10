@@ -9,7 +9,7 @@ import psycopg2
 
 load_dotenv()
 # connect to Postgres
-conn = psycopg2.connect(f"dbname={os.getenv('DB_NAME')} user={os.getenv('DB_USER')}")
+conn = psycopg2.connect(f"dbname={os.getenv('DB_NAME')}")
 
 cur = conn.cursor()
 
@@ -23,7 +23,7 @@ api = alpaca.REST(os.getenv('ALPACA_API_KEY'), os.getenv('ALPACA_SECRET_KEY'), o
 # fetch list of symbols to keep updated
 assets = [a.symbol for a in api.list_assets() if a.tradable and a.status == 'active' and a.exchange == 'NYSE']
 
-print(f'Retrieving {len(assets))} tickers!')
+print(f'Retrieving {len(assets)} tickers!')
 
 # fetch prices from alpaca and read them into database
 def get_data():

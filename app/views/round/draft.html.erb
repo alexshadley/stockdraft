@@ -1,22 +1,25 @@
-<% if not @users.map{ |u| u.session_id }.include? session.id.to_s %>
-  <%= form_with data: { reflex: "submit->DraftReflex#newUser" } do |form| %>
-    <div>
-      <%= form.label :name %>
-      <%= form.text_field :name %>
-    </div>
-
-    <%= form.submit %>
-  <% end %>
-<% end %>
-
 <div class="container">
 
-  <%# TODO(emilia): if round hasn't started %>
-  <div class="row justify-content-center">
-    <button type="button" class="btn btn-success btn-lg btn-block btn-start-round">Start Round</button>
-  </div>
-  <%# else if its the players turn, show `it's your turn` %>
-  <%# else show> `it's ___ turn` %>
+  <% if not @users.map{ |u| u.session_id }.include? session.id.to_s %>
+    <div class="row justify-content-center">
+      <h2>Join <%=@round.round_id%> </h2>
+    </div>
+
+    <div class="row justify-content-center">
+      <%= form_with data: { reflex: "submit->DraftReflex#newUser" } do |form| %>
+        <%= form.text_field :name, placeholder: "name"%>
+        <button type="submit" class="btn btn-primary">Join</button>
+      <% end %>
+    </div>
+
+  <% else%>
+    <%# TODO(emilia): if round hasn't started %>
+    <div class="row justify-content-center">
+      <button type="button" class="btn btn-success btn-lg btn-block btn-start-round">Start Round</button>
+    </div>
+    <%# TODO(emilia): else if its the players turn, show `it's your turn` %>
+    <%#  TODO(emilia): else show> `it's ___ turn` %>
+  <% end %>
 
   <div class="row">
     <h3>Available</h3>

@@ -1,5 +1,5 @@
 <% if not @users.map{ |u| u.session_id }.include? session.id.to_s %>
-  <%= form_with data: { reflex: "submit->DraftReflex#newUser" } do |form| %>
+  <%= form_with data: { reflex: "submit->DraftReflex#new_user" } do |form| %>
     <div>
       <%= form.label :name %>
       <%= form.text_field :name %>

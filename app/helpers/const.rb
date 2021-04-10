@@ -1,0 +1,4 @@
+module Const
+  PORTFOLIO_START_VALUE_USD = 1000.00
+  DRAFTS_PER_USER = 5
+end

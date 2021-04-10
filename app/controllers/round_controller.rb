@@ -3,13 +3,19 @@ class RoundController < ApplicationController
   end
 
   def create_post
-    puts params[:name]
-    redirect_to action: "show", id: params[:name]
+    round = Round.new(round_id: params[:name], display_name: params[:name])
+    round.save
+
+    puts round
+
+    redirect_to action: "draft", id: params[:name]
   end
 
   def show
+    @round = Round.find(params[:id])
   end
 
   def draft
+    @round = Round.find(params[:id])
   end
 end

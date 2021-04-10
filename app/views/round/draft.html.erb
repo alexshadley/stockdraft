@@ -1,44 +1,60 @@
-<% if not @users.map{ |u| u.session_id }.include? session.id.to_s %>
-  <%= form_with data: { reflex: "submit->DraftReflex#new_user" } do |form| %>
-    <div>
-      <%= form.label :name %>
-      <%= form.text_field :name %>
-    </div>
-
-    <%= form.submit %>
-  <% end %>
-<% end %>
 
 <div class="container">
 
-  <%#  if round hasn't started %>
-  <div class="row justify-content-center">
-    <button type="button" class="btn btn-success btn-lg btn-block btn-start-round">Start Round</button>
-  </div>
-  <%# else if its the players turn, show `it's your turn` %>
-  <%# else show> `it's ___ turn` %>
+  <% if not @users.map{ |u| u.session_id }.include? session.id.to_s %>
+    <div class="row justify-content-center">
+      <h2>Join <%=@round.round_id%> </h2>
+    </div>
+
+    <div class="row justify-content-center">
+      <%= form_with data: { reflex: "submit->DraftReflex#new_user" } do |form| %>
+        <%= form.text_field :name, placeholder: "name"%>
+        <button type="submit" class="btn btn-primary">Join</button>
+      <% end %>
+    </div>
+
+  <% else%>
+    <%# TODO(emilia): if round hasn't started %>
+    <div class="row justify-content-center">
+      <button type="button" class="btn btn-success btn-lg btn-block btn-start-round">Start Round</button>
+    </div>
+    <%# TODO(emilia): else if its the players turn, show `it's your turn` %>
+    <%#  TODO(emilia): else show> `it's ___ turn` %>
+  <% end %>
 
   <div class="row">
     <h3>Available</h3>
   </div>
 
-  <div class="row justify-content-center">
-    <% for ticker in @all_tickers %>
-      <div class="card bg-primary">
-        <div class="card-body">
-          <p class="card-title"><%= ticker %></p>
-        </div>
-      </div>
-    <% end %>
+  <%= render "stock_selection"%>
+
+  <div class="row">
+    <h3>Drafted</h3>
   </div>
 
-  <%# drafted tickers and user who drafted %>
-  <h1> Drafted so far </h1>
-  <% for drafts in @drafted_tickers %>
-  <div>
-      symbol: <%= drafts.symbol %> user_id:<%= drafts.user_id %>
+  <div class="row">
+    <table class="table table-hover table-drafted">
+      <thead class="table-primary">
+        <th scope="col">#</th>
+        <th scope="col">Stock</th>
+        <th scope="col">User</th>
+      </thead>
+
+      <tbody>
+        <% for drafts in @drafted_tickers %>
+          <tr>
+            <%# TODO(emilia): change the number to 
+                a) draft has a property with the pick number or 
+                b) drafted tickers stored in order, print the loop number %>
+            <td>1.</td>
+            <td><%= drafts.symbol %></td>
+            <td><%= drafts.user_id %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
-  <% end %>
+  
 
 </div>
 

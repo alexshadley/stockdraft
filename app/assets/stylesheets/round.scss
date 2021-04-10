@@ -32,8 +32,13 @@ small, .text_small {font-size: 0.833rem;}
 
 .card {
   margin: 20px;
+  p.card-title {
+    margin-bottom: 0px;
+  }
 }
 
-p.card-title {
-  margin-bottom: 0px;
+.table-drafted {
+  thead th {
+    padding: 4px;
+  }
 }

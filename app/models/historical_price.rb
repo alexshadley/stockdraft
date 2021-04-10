@@ -1,0 +1,2 @@
+class HistoricalPrice < ApplicationRecord
+end

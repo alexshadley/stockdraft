@@ -1,9 +1,6 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
+[Design Notes](https://docs.google.com/document/d/1W2Oa5H_Mzx-OG8B4HwBRnteGLfQ84v2Nq43SURhzzU0)
 
 * Ruby version
 

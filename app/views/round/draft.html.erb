@@ -8,9 +8,40 @@
     <%= form.submit %>
   <% end %>
 <% end %>
-<% for ticker in @tickers %>
-  <div><%= ticker %></div>
-<% end %>
+
+<div class="container">
+
+  <%#  if round hasn't started %>
+  <div class="row justify-content-center">
+    <button type="button" class="btn btn-success btn-lg btn-block btn-start-round">Start Round</button>
+  </div>
+  <%# else if its the players turn, show `it's your turn` %>
+  <%# else show> `it's ___ turn` %>
+
+  <div class="row">
+    <h3>Available</h3>
+  </div>
+
+  <div class="row justify-content-center">
+    <% for ticker in @all_tickers %>
+      <div class="card bg-primary">
+        <div class="card-body">
+          <p class="card-title"><%= ticker %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <%# drafted tickers and user who drafted %>
+  <h1> Drafted so far </h1>
+  <% for drafts in @drafted_tickers %>
+  <div>
+      symbol: <%= drafts.symbol %> user_id:<%= drafts.user_id %>
+  </div>
+  <% end %>
+
+</div>
+
 <% for user in @users %>
   <div><%= user.display_name %></div>
 <% end %>

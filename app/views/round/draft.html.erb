@@ -1,6 +1,6 @@
 <div class="container">
 
-  <%#  if round hasn't started %>
+  <%# TODO(emilia): if round hasn't started %>
   <div class="row justify-content-center">
     <button type="button" class="btn btn-success btn-lg btn-block btn-start-round">Start Round</button>
   </div>
@@ -21,12 +21,32 @@
     <% end %>
   </div>
 
-  <%# drafted tickers and user who drafted %>
-  <h1> Drafted so far </h1>
-  <% for drafts in @drafted_tickers %>
-  <div>
-      symbol: <%= drafts.symbol %> user_id:<%= drafts.user_id %>
+  <div class="row">
+    <h3>Drafted</h3>
   </div>
-  <% end %>
+
+  <div class="row">
+    <table class="table table-hover table-drafted">
+      <thead class="table-primary">
+        <th scope="col">#</th>
+        <th scope="col">Stock</th>
+        <th scope="col">User</th>
+      </thead>
+
+      <tbody>
+        <% for drafts in @drafted_tickers %>
+          <tr>
+            <%# TODO(emilia): change the number to 
+                a) draft has a property with the pick number or 
+                b) drafted tickers stored in order, print the loop number %>
+            <td>1.</td>
+            <td><%= drafts.symbol %></td>
+            <td><%= drafts.user_id %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  
 
 </div>

@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  round_id: a1b2c3
+  user_id: 1
+  position_entry_time: 2021-04-03 04:29:53
+  symbol: APPL
+  position_size: 9.99
+  per_unit_entry_cost: 202.41
+
+two:
+  round_id: d4e5f6
+  user_id: 2
+  position_entry_time: 2021-04-03 04:28:53
+  symbol: GOOG
+  position_size: 1
+  per_unit_entry_cost: 2000.44

@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  session_id: abcdefgh12345
+  round_id: a1b2c3
+  display_name: Trent
+
+two:
+  user_id: 1
+  session_id: bcdefghi23456
+  round_id: d4e5f6
+  display_name: Alex

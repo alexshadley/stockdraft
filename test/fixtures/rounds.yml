@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+round1:
+  round_id: a1b2c3
+  display_name: Group game 1
+  creation_time: 2021-04-03 03:31:31
+  draft_finish_time: 2021-04-04 03:31:31
+  round_finish_time: 2021-04-10 03:31:31
+
+round2:
+  round_id: d4e5f6
+  display_name: Group Game 2
+  creation_time: 2021-04-03 03:31:31
+  draft_finish_time: 2021-04-04 03:31:31
+  round_finish_time: 2021-04-10 03:31:31

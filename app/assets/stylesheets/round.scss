@@ -1,6 +1,39 @@
 // Place all the styles related to the Round controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
- h1 {
+
+/* ==========================================================================
+   Main
+   ========================================================================== */
+h1 {
+  font-size: 4.209rem;
   font-family: 'Gafata', sans-serif;
- }
+}
+
+h2 {font-size: 2.074rem;}
+
+h3 {font-size: 1.728rem;}
+
+h4 {
+  font-size: 1.44rem;
+  margin-bottom: 0;
+}
+
+h5 {font-size: 1.2rem;}
+
+small, .text_small {font-size: 0.833rem;}
+
+/* ==========================================================================
+   Draft
+   ========================================================================== */
+.btn-start-round {
+  margin: 20px
+}
+
+.card {
+  margin: 20px;
+}
+
+p.card-title {
+  margin-bottom: 0px;
+}

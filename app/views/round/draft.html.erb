@@ -1,3 +1,24 @@
-<% for ticker in @tickers %>
-  <div><%= ticker %></div>
-<% end %>
+<div class="container">
+
+  <%#  if round hasn't started %>
+  <div class="row justify-content-center">
+    <button type="button" class="btn btn-success btn-lg btn-block btn-start-round">Start Round</button>
+  </div>
+  <%# else if its the players turn, show `it's your turn` %>
+  <%# else show> `it's ___ turn` %>
+
+  <div class="row">
+    <h3>Available</h3>
+  </div>
+
+  <div class="row justify-content-center">
+    <% for ticker in @tickers %>
+      <div class="card bg-primary">
+        <div class="card-body">
+          <p class="card-title"><%= ticker %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+</div>

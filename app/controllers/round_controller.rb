@@ -19,6 +19,8 @@ class RoundController < ApplicationController
       puts draft.symbol
       puts draft.user_id
     end
+    @users = User.where(round_id: @round.round_id)
+    @tickers = Tickers.get_tickers
   end
 
   # Dashboard

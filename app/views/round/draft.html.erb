@@ -1,3 +1,14 @@
+<% if not @users.map{ |u| u.session_id }.include? session.id.to_s %>
+  <%= form_with data: { reflex: "submit->DraftReflex#newUser" } do |form| %>
+    <div>
+      <%= form.label :name %>
+      <%= form.text_field :name %>
+    </div>
+
+    <%= form.submit %>
+  <% end %>
+<% end %>
+
 <div class="container">
 
   <%# TODO(emilia): if round hasn't started %>
@@ -50,3 +61,7 @@
   
 
 </div>
+
+<% for user in @users %>
+  <div><%= user.display_name %></div>
+<% end %>

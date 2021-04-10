@@ -1,3 +1,14 @@
-<% for ticker in @tickers %>
+<%# list of all tickers %>
+<h1>All available tickers</h1>
+<% for ticker in @all_tickers %>
   <div><%= ticker %></div>
+<% end %>
+
+
+<%# drafted tickers and user who drafted %>
+<h1> Drafted so far </h1>
+<% for drafts in @drafted_tickers %>
+  <div>
+    symbol: <%= drafts.symbol %> user_id:<%= drafts.user_id %>
+  </div>
 <% end %>

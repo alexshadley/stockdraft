@@ -1,6 +1,7 @@
+import CableReady from 'cable_ready'
 import consumer from "./consumer"
 
-var id = document.URL.split('/').slice(-2)[0]
+var id = decodeURI(document.URL).split('/').slice(-2)[0]
 console.log(id)
 
 consumer.subscriptions.create(

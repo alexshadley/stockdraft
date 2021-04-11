@@ -1,11 +1,40 @@
-<div id="stock-selection" class="row justify-content-center">
-  <% for ticker in @all_tickers %>
-    <% if !@drafted_tickers.map{|t| t.symbol}.include? ticker %>
-      <div class="card bg-primary">
-        <div class="card-body" data-symbol="<%=ticker%>" data-round_id="<%=@round.round_id%>" data-reflex="click->DraftReflex#pick_stock">
-          <p class="card-title"><%= ticker %></p>
+<div id="stock-selection">
+  <div class="row justify-content-center">
+    <% for ticker in all_tickers %>
+      <% if !drafted_tickers.map{|t| t.symbol}.include? ticker %>
+        <div class="card bg-primary">
+          <div class="card-body" data-symbol="<%=ticker%>" data-round_id="<%=round.round_id%>" data-reflex="click->DraftReflex#pick_stock">
+            <p class="card-title"><%= ticker %></p>
+          </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
+
+  <div class="row">
+    <h3>Drafted</h3>
+  </div>
+
+  <div class="row">
+    <table class="table table-hover table-drafted">
+      <thead class="table-primary">
+        <th scope="col">#</th>
+        <th scope="col">Stock</th>
+        <th scope="col">User</th>
+      </thead>
+
+      <tbody>
+        <% for drafts in drafted_tickers %>
+          <tr>
+            <%# TODO(emilia): change the number to 
+                a) draft has a property with the pick number or 
+                b) drafted tickers stored in order, print the loop number %>
+            <td>1.</td>
+            <td><%= drafts.symbol %></td>
+            <td><%= drafts.user_id %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get '/', to: redirect('round/create')
+
   get 'round/create'
   
   # Runs the 'create_post' method in app/controllers/round_controller.rb

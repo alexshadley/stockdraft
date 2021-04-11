@@ -7,7 +7,10 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.string :display_name
 
       t.timestamps
-    end
+    end 
+    # Below execute statements for auto increment functionality on the table
+    execute "CREATE SEQUENCE users_user_id_seq START 1001"
+    execute "ALTER TABLE users ALTER COLUMN user_id SET DEFAULT NEXTVAL('users_user_id_seq')"
     add_index :users, :user_id
     add_index :users, :session_id
     add_index :users, :round_id

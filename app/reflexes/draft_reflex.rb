@@ -33,8 +33,8 @@ class DraftReflex < ApplicationReflex
     end
 
     # Write the valid draft pick
-    unit_cost = PortfolioHelper.get_price_at_time(@selected_symbol, @round.creation_time)
-
+    unit_cost = AlpacaReader.get_price_now(@selected_symbol)
+    
     StockDraft.new( 
       round_id: @round.round_id,
       user_id: @user.user_id,

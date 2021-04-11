@@ -21,5 +21,7 @@ class RoundController < ApplicationController
   # Dashboard
   def show
     @round = Round.find(params[:id])
+    @users = User.where(round_id: @round.round_id)
+    @drafts = StockDraft.where(round_id: @round.round_id)
   end
 end

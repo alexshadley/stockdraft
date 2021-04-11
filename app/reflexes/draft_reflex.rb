@@ -1,3 +1,5 @@
+
+
 class DraftReflex < ApplicationReflex
   def new_user
     @round = Round.find(params[:id])
@@ -6,7 +8,7 @@ class DraftReflex < ApplicationReflex
     user.save
 
     # re-query all users
-    @users = User.where(round_id: @round.round_id)
+    @users = RoundHelper.users_in_round(@round.round_id)
   end
   
   def pick_stock
@@ -18,7 +20,9 @@ class DraftReflex < ApplicationReflex
 
     @round = Round.find(params[:id])
     @user = User.all.where({session_id: session.id.to_s, round_id: @round.round_id}).first
+    @users = RoundHelper.users_in_round(@round.round_id)
     @selected_symbol = element.dataset['symbol']
+    @all_tickers = Tickers.get_tickers
 
     if @user.nil?
       # Probably a spectator, don't let them in!
@@ -40,7 +44,7 @@ class DraftReflex < ApplicationReflex
       user_id: @user.user_id,
       position_entry_time: @round.creation_time,
       symbol: @selected_symbol,
-      position_size: Const::PORTFOLIO_START_VALUE_USD / unit_cost,
+      position_size: Const::PORTFOLIO_START_VALUE_USD / Const::DRAFTS_PER_USER / unit_cost,
       per_unit_entry_cost: unit_cost
     ).save
 
@@ -53,10 +57,11 @@ class DraftReflex < ApplicationReflex
     end
     
     # Update @next_user
-    @next_user = DraftHelper.get_next_up_for_draft(@round.round_id)
+    @next_user = DraftHelper.current_up_for_draft(@drafted_tickers.length, @users)
 
-
-    # TODO: Update people with ~cables~
-    
+    cable_ready["draft:#{@round.round_id}"].morph(
+      selector: '#stock-selection',
+      html: render(partial: 'stock_selection', locals: {drafted_tickers: @drafted_tickers, all_tickers: @all_tickers, round: @round})
+    ).broadcast
   end
 end

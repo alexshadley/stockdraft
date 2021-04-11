@@ -15,15 +15,6 @@ ActiveRecord::Schema.define(version: 2021_04_10_083131) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "historical_prices", force: :cascade do |t|
-    t.string "symbol"
-    t.datetime "time"
-    t.decimal "price", precision: 8, scale: 2
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["symbol"], name: "index_historical_prices_on_symbol"
-  end
-
   create_table "rounds", force: :cascade do |t|
     t.string "round_id"
     t.string "display_name"

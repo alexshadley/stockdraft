@@ -59,3 +59,4 @@ gem "stimulus_reflex", "~> 3.4"
 
 gem "chartkick", "~> 4.0"
 gem "alpaca-trade-api", "~> 0.7.0"
+gem "iex-ruby-client", "~> 1.4.0"

@@ -30,12 +30,36 @@ class RoundController < ApplicationController
     prices = AlpacaReader.get_data(Time.now - 5.days)
     
     if params[:portfolio].nil?
+      @chart_data = []
+
+      for user in @users
+        symbols = @drafts.select{|draft| draft.user_id == user.user_id}.map{|draft| draft.symbol}
+        portfolio_prices = prices.select{|k, v| symbols.include? k}
+
+        if portfolio_prices.size < 1
+          next 
+        end
+
+        puts portfolio_prices
+
+        summed_portfolio = {}
+        for timestamp in portfolio_prices.values[0].keys
+          sum = 0
+          for price_series in portfolio_prices.values
+            if not price_series[timestamp].nil?
+              sum += price_series[timestamp]
+            end
+          end
+          summed_portfolio[timestamp.strftime('[%B %d, %I:%M]')] = sum
+        end
+
+        @chart_data.append({name: user.display_name, data: summed_portfolio})
+      end
+
     else
       symbols = @drafts.select{|draft| draft.user_id.to_s == params[:portfolio]}.map{|draft| draft.symbol}
-      puts symbols
-
       portfolio_prices = prices.select{|k, v| symbols.include? k}
-      puts portfolio_prices
+
       @chart_data = portfolio_prices.map{ |symbol, data|
         first_value = data.values[0]
         normalized = data.map{ |time, value| [time.strftime('[%B %d, %I:%M]'), value / first_value]}.to_h

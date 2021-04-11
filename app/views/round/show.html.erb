@@ -15,11 +15,11 @@
         </thead>
 
         <tbody>
-          <% @portfolios.sort_by{|p| p[:value]}.each_with_index do |portfolio, index| %>
-            <tr onclick="window.location.search += '?portfolio=<%= portfolio[:user].user_id %>'">
+          <% @portfolios_by_user.sort_by{|u, p| p.values.last}.each_with_index do |user_and_portfolio, index| %>
+            <tr onclick="window.location.search += '?portfolio=<%= user_and_portfolio[0].user_id %>'">
               <td><%= index + 1 %></td>
-              <td><%= portfolio[:user].display_name %></td>
-              <td><%= portfolio[:value] %></td>
+              <td><%= user_and_portfolio[0].display_name %></td>
+              <td><%= user_and_portfolio[1].values.last %></td>
             </tr>
           <% end %>
         </tbody>

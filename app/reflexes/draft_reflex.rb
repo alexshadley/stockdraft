@@ -6,7 +6,7 @@ class DraftReflex < ApplicationReflex
     user.save
 
     # re-query all users
-    @users = User.where(round_id: @round.round_id)
+    @users = RoundHelper.users_in_round(@round.round_id)
   end
   
   def pick_stock
@@ -18,6 +18,7 @@ class DraftReflex < ApplicationReflex
 
     @round = Round.find(params[:id])
     @user = User.all.where({session_id: session.id.to_s, round_id: @round.round_id}).first
+    @users = RoundHelper.users_in_round(@round.round_id)
     @selected_symbol = element.dataset['symbol']
 
     if @user.nil?
@@ -40,7 +41,7 @@ class DraftReflex < ApplicationReflex
       user_id: @user.user_id,
       position_entry_time: @round.creation_time,
       symbol: @selected_symbol,
-      position_size: Const::PORTFOLIO_START_VALUE_USD / unit_cost,
+      position_size: Const::PORTFOLIO_START_VALUE_USD / Const::DRAFTS_PER_USER / unit_cost,
       per_unit_entry_cost: unit_cost
     ).save
 
@@ -53,8 +54,7 @@ class DraftReflex < ApplicationReflex
     end
     
     # Update @next_user
-    @next_user = DraftHelper.get_next_up_for_draft(@round.round_id)
-
+    @next_user = DraftHelper.current_up_for_draft(@drafted_tickers.length, @users)
 
     # TODO: Update people with ~cables~
     

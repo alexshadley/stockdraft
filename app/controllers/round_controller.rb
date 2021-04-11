@@ -14,8 +14,8 @@ class RoundController < ApplicationController
     @round = Round.find(params[:id])
     @all_tickers = Tickers.get_tickers
     @drafted_tickers = DraftHelper.drafted_tickers(@round.round_id)
-    @users = User.where(round_id: @round.round_id)
-    @next_user = DraftHelper.get_next_up_for_draft(@round.round_id)
+    @users = RoundHelper.users_in_round(@round.round_id)
+    @next_user = DraftHelper.current_up_for_draft(@drafted_tickers.length, @users)
   end
 
   # Dashboard

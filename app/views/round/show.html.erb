@@ -2,6 +2,18 @@
   <div class="row">
     <h1><% @round.display_name%></h1>
 
-    <%= line_chart [{name: "GOOG", data: @goog_time_series}, {name: "AAPL", data: @aapl_time_series}] %>
+    <%= line_chart @chart_data, min: @mins.min, max: @maxes.max, library: {pointRadius: 0}  %>
+  </div>
+  <div class="row">
+    <% for user in @users %>
+      <div class="card">
+        <div class="card-body">
+          <p class="card-title"><%= user.display_name %></p>
+          <% for draft in @drafts.select{|d| d.user_id == user.user_id} %>
+            <p><%= draft.symbol %></p>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

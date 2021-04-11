@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 2021_04_10_083131) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.integer "user_id"
+    t.serial "user_id"
     t.string "session_id"
     t.string "round_id"
     t.string "display_name"

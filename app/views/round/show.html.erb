@@ -2,7 +2,7 @@
   <div class="row">
     <h1><% @round.display_name%></h1>
 
-    <%= line_chart @chart_data, min: @mins.min, max: @maxes.max, library: {pointRadius: 0}  %>
+    <%= line_chart @chart_data, min: @mins.min, max: @maxes.max, height: "600px", library: {pointRadius: 0} %>
   </div>
   <div class="row">
     <% for user in @users %>

@@ -1,9 +1,11 @@
 <div id="stock-selection" class="row justify-content-center">
   <% for ticker in @all_tickers %>
-    <div class="card bg-primary">
-      <div class="card-body">
-        <p class="card-title"><%= ticker %></p>
+    <% if !@drafted_tickers.map{|t| t.symbol}.include? ticker %>
+      <div class="card bg-primary">
+        <div class="card-body" data-symbol="<%=ticker%>" data-round_id="<%=@round.round_id%>" data-reflex="click->DraftReflex#pick_stock">
+          <p class="card-title"><%= ticker %></p>
+        </div>
       </div>
-    </div>
+    <% end %>
   <% end %>
 </div>

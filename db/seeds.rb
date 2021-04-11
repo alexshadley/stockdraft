@@ -14,6 +14,14 @@ Round.create([
   { round_id: 'test', display_name: 'Test Round', creation_time: Time.now.getutc}
 ])
 
+for i in [1, 2, 3]
+  User.create({
+    round_id: 'test',
+    user_id: i,
+    display_name: i.to_s
+  })
+end
+
 i = 0
 for ticker in ["AAPL", "TSLA", "GOOG"]
   StockDraft.create({

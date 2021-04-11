@@ -4,6 +4,7 @@
       <% if !@drafted_tickers.map{|t| t.symbol}.include? ticker %>
       <div class="card bg-primary">
         <div class="card-body" data-symbol="<%=ticker%>" data-round_id="<%=@round.round_id%>" data-reflex="click->DraftReflex#pick_stock">
+          <img src=<%= TickerInfo.get_logo_url(ticker) %> style="max-width:100px;max-height:100px;">
           <p class="card-title"><%= ticker %></p>
           <p class="card-company-name"><%= TickerInfo.get_company_name(ticker) %></p>
           </div>

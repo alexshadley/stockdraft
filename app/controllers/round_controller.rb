@@ -52,18 +52,21 @@ class RoundController < ApplicationController
 
   def portfolio_series_for_user(user, drafts, all_prices)
     symbols = drafts.select{|draft| draft.user_id == user.user_id}.map{|draft| draft.symbol}
-    portfolio_prices = all_prices.select{|k, v| symbols.include? k}
+    symbol_prices = all_prices.select{|k, v| symbols.include? k}
 
-    if portfolio_prices.size < 1
+    if symbol_prices.size < 1
       return {}
     end
 
     summed_portfolio = {}
-    for timestamp in portfolio_prices.values[0].keys
+    for timestamp in symbol_prices.values[0].keys
       sum = 0
-      for price_series in portfolio_prices.values
+      for symbol, price_series in symbol_prices
+        # draft associated with symbol for user
+        draft = drafts.select{|draft| draft.user_id == user.user_id && draft.symbol == symbol}[0]
+
         if not price_series[timestamp].nil?
-          sum += price_series[timestamp]
+          sum += price_series[timestamp] * draft.position_size
         end
       end
       summed_portfolio[timestamp.strftime('[%B %d, %I:%M]')] = sum

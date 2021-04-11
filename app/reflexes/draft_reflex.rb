@@ -19,7 +19,7 @@ class DraftReflex < ApplicationReflex
     @round = Round.find(params[:id])
     @user = User.all.where({session_id: session.id.to_s, round_id: @round.round_id}).first
     @selected_symbol = element.dataset['symbol']
-    puts @user.to_s
+
     if @user.nil?
       # Probably a spectator, don't let them in!
       puts "Spectator click\n"
@@ -35,29 +35,17 @@ class DraftReflex < ApplicationReflex
     # Write the valid draft pick
     unit_cost = PortfolioHelper.get_price_at_time(@selected_symbol, @round.creation_time)
 
-    draft_write = StockDraft.new( 
+    StockDraft.new( 
       round_id: @round.round_id,
       user_id: @user.user_id,
       position_entry_time: @round.creation_time,
       symbol: @selected_symbol,
       position_size: Const::PORTFOLIO_START_VALUE_USD / unit_cost,
       per_unit_entry_cost: unit_cost
-    )
-    
-    draft_write.save
-    
-    for draft in StockDraft.all.where({round_id: @round.round_id})
-      puts (draft.to_s)
-      puts draft.symbol + draft.user_id.to_s + "\n"
-    end
+    ).save
 
     @drafted_tickers = DraftHelper.drafted_tickers(@round.round_id)
 
-    puts "Post query \n"
-    for ticker in @drafted_tickers
-      puts (ticker.nil?.to_s)
-      puts ticker.symbol + ticker.user_id.to_s + "\n"
-    end
     # End draft if over
     if DraftHelper.draft_complete(@round)
       # TODO: Write draft-end time + redirect to show page + next_user set

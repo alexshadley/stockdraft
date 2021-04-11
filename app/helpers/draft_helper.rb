@@ -1,6 +1,6 @@
 module DraftHelper
   def self.drafted_tickers(active_round_id)
-    return StockDraft.select(:user_id, :symbol).where(round_id: [active_round_id]).distinct
+    return StockDraft.select(:user_id, :symbol).where(round_id: [active_round_id])
   end
 
   def self.generate_fake_draft_data(active_round_id, tickers)
@@ -27,4 +27,10 @@ module DraftHelper
     # TODO: Return the user object for the next picker in the draft
     return User
   end
+
+  def self.draft_complete(active_round_id)
+    # TODO: Return whether enough stocks have been picked to end the draft
+    return false
+  end
+
 end

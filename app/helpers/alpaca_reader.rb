@@ -19,7 +19,6 @@ class AlpacaReader
             end
         }
     end
-    puts ticker_close_prices
     return ticker_close_prices
   end
 end

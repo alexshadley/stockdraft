@@ -6,10 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-HistoricalPrice.create([
-
-])
-
 Round.create([
   { round_id: 'test', display_name: 'Test Round', creation_time: Time.now.getutc}
 ])

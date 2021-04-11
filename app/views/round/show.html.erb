@@ -1,19 +1,29 @@
 <div class="container">
-  <div class="row">
-    <h1><% @round.display_name%></h1>
-
-    <%= line_chart @chart_data, min: @mins.min, max: @maxes.max, library: {pointRadius: 0}  %>
+  <div class="row justify-content-center">
+    <h1 onclick="window.location.search =''">Dashboard: <% @round.round_id %></h1>
   </div>
   <div class="row">
-    <% for user in @users %>
-      <div class="card">
-        <div class="card-body">
-          <p class="card-title"><%= user.display_name %></p>
-          <% for draft in @drafts.select{|d| d.user_id == user.user_id} %>
-            <p><%= draft.symbol %></p>
+    <div class="col col-8">
+      <%= line_chart @chart_data, min: @mins.min, max: @maxes.max, height: "600px", library: {pointRadius: 0} %>
+    </div>
+    <div class="col col-4">
+      <table class="table table-hover">
+        <thead class="table-primary">
+          <th scope="col">Place</th>
+          <th scope="col">User</th>
+          <th scope="col">Portfolio Value</th>
+        </thead>
+
+        <tbody>
+          <% @portfolios_by_user.sort_by{|u, p| p.values.last}.each_with_index do |user_and_portfolio, index| %>
+            <tr onclick="window.location.search += '&portfolio=<%= user_and_portfolio[0].user_id %>'">
+              <td><%= index + 1 %></td>
+              <td><%= user_and_portfolio[0].display_name %></td>
+              <td><%= user_and_portfolio[1].values.last %></td>
+            </tr>
           <% end %>
-        </div>
-      </div>
-    <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

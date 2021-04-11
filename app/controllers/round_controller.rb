@@ -24,18 +24,51 @@ class RoundController < ApplicationController
     @users = User.where(round_id: @round.round_id)
     @drafts = StockDraft.where(round_id: @round.round_id)
 
+    prices = AlpacaReader.get_data(Time.now - 7.days)
+    @portfolios_by_user = @users.map{|user| [user, portfolio_series_for_user(user, @drafts, prices)]}
+    
+    if params[:portfolio].nil?
+      @chart_data = @portfolios_by_user.map{|user, portfolio_series| {name: user.display_name, data: portfolio_series}}
+
+    else
+      symbols = @drafts.select{|draft| draft.user_id.to_s == params[:portfolio]}.map{|draft| draft.symbol}
+      portfolio_prices = prices.select{|k, v| symbols.include? k}
+
+      @chart_data = portfolio_prices.map{ |symbol, data|
+        first_value = data.values[0]
+        normalized = data.map{ |time, value| [time.in_time_zone('America/New_York').strftime('[%B %d, %I:%M]'), value / first_value]}.to_h
+        {name: symbol, data: normalized}
+      }
+    end
+
     @mins = []
     @maxes = []
 
-    values = AlpacaReader.get_data(Time.now - 5.days)
-    @chart_data = values.map{ |symbol, data|
-      first_value = data.values[0]
-      normalized = data.map{ |time, value| [time.strftime('[%B %d, %I:%M]'), value / first_value]}.to_h
+    for series in @chart_data
+      @mins.append(series[:data].values.min)
+      @maxes.append(series[:data].values.max)
+    end
+  end
 
-      @mins.append(normalized.values.min)
-      @maxes.append(normalized.values.max)
-      
-      {name: symbol, data: normalized}
-    }
+  def portfolio_series_for_user(user, drafts, all_prices)
+    symbols = drafts.select{|draft| draft.user_id == user.user_id}.map{|draft| draft.symbol}
+    portfolio_prices = all_prices.select{|k, v| symbols.include? k}
+
+    if portfolio_prices.size < 1
+      return {}
+    end
+
+    summed_portfolio = {}
+    for timestamp in portfolio_prices.values[0].keys
+      sum = 0
+      for price_series in portfolio_prices.values
+        if not price_series[timestamp].nil?
+          sum += price_series[timestamp]
+        end
+      end
+      summed_portfolio[timestamp.strftime('[%B %d, %I:%M]')] = sum
+    end
+
+    return summed_portfolio
   end
 end

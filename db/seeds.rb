@@ -18,15 +18,51 @@ for i in [1, 2, 3]
   })
 end
 
-i = 0
-for ticker in ["AAPL", "TSLA", "GOOG"]
-  StockDraft.create({
-    round_id: 'test',
-    user_id: i,
-    position_entry_time: Time.now.getutc,
-    symbol: ticker,
-    position_size: 10,
-    per_unit_entry_cost: 20
-  })
-  i += 1
-end
+StockDraft.create({
+  round_id: 'test',
+  user_id: 1,
+  position_entry_time: Time.now.getutc,
+  symbol: 'GOOG',
+  position_size: 10,
+  per_unit_entry_cost: 20
+})
+StockDraft.create({
+  round_id: 'test',
+  user_id: 1,
+  position_entry_time: Time.now.getutc,
+  symbol: 'TSLA',
+  position_size: 10,
+  per_unit_entry_cost: 20
+})
+StockDraft.create({
+  round_id: 'test',
+  user_id: 2,
+  position_entry_time: Time.now.getutc,
+  symbol: 'TSLA',
+  position_size: 10,
+  per_unit_entry_cost: 20
+})
+StockDraft.create({
+  round_id: 'test',
+  user_id: 2,
+  position_entry_time: Time.now.getutc,
+  symbol: 'GME',
+  position_size: 10,
+  per_unit_entry_cost: 20
+})
+StockDraft.create({
+  round_id: 'test',
+  user_id: 3,
+  position_entry_time: Time.now.getutc,
+  symbol: 'AAPL',
+  position_size: 10,
+  per_unit_entry_cost: 20
+})
+StockDraft.create({
+  round_id: 'test',
+  user_id: 3,
+  position_entry_time: Time.now.getutc,
+  symbol: 'MSFT',
+  position_size: 10,
+  per_unit_entry_cost: 20
+})

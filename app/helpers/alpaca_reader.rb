@@ -21,4 +21,9 @@ class AlpacaReader
     end
     return ticker_close_prices
   end
+
+  def self.get_price_now(symbol)
+    bars = @@alpaca_client.bars("15Min", Array.[](symbol), limit:1)
+    return bars[symbol][0].close
+  end
 end

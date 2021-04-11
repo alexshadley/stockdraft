@@ -15,8 +15,8 @@
         </thead>
 
         <tbody>
-          <% @portfolios_by_user.sort_by{|u, p| p.values.last}.each_with_index do |user_and_portfolio, index| %>
-            <tr onclick="window.location.search += '&portfolio=<%= user_and_portfolio[0].user_id %>'">
+          <% @portfolios_by_user.sort_by{|u, p| p.values.last}.reverse.each_with_index do |user_and_portfolio, index| %>
+            <tr onclick="window.location.search = 'portfolio=<%= user_and_portfolio[0].user_id %>'">
               <td><%= index + 1 %></td>
               <td><%= user_and_portfolio[0].display_name %></td>
               <td><%= user_and_portfolio[1].values.last %></td>

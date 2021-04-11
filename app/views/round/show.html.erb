@@ -1,2 +1,7 @@
-<h1>Round#show</h1>
-<p>Find me in app/views/round/show.html.erb</p>
+<div class="container">
+  <div class="row">
+    <h1><% @round.display_name%></h1>
+
+    <%= line_chart [{name: "GOOG", data: @goog_time_series}, {name: "AAPL", data: @aapl_time_series}] %>
+  </div>
+</div>

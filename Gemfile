@@ -58,3 +58,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "stimulus_reflex", "~> 3.4"
 
 gem "chartkick", "~> 4.0"
+gem "alpaca-trade-api", "~> 0.7.0"

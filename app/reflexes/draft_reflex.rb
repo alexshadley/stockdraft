@@ -17,10 +17,15 @@ class DraftReflex < ApplicationReflex
     # 5) Update view (idk how to push this to everyone)
 
     @round = Round.find(params[:id])
-    @user = User.first.where(session_id: session_id, round_id: @round.round_id)
+    @user = User.all.where({session_id: session.id.to_s, round_id: @round.round_id}).first
     @selected_symbol = params[:symbol]
     
-    if @user is nil
+    puts @user.to_s + "\n"
+    puts @user.id.to_s + "\n"
+    puts @user.round_id.to_s + "\n"
+    puts @user.display_name.to_s + "\n"
+
+    if @user.nil?
       # Probably a spectator, don't let them in!
       return
     end
@@ -32,7 +37,7 @@ class DraftReflex < ApplicationReflex
     end
 
     # Write the valid draft pick
-    unit_cost = get_price_at_time(@selected_symbol, @round.creation_time)
+    unit_cost = PortfolioHelper.get_price_at_time(@selected_symbol, @round.creation_time)
 
     StockDraft.new( 
       round_id: @round.round_id,
@@ -43,6 +48,11 @@ class DraftReflex < ApplicationReflex
       per_unit_entry_cost: unit_cost
     ).save
     
+    @drafted_tickers = DraftHelper.drafted_tickers(@round.round_id)
+
+    for ticker in @drafted_tickers
+      puts ticker.symbol + ticker.user_id.to_s + "\n"
+    end
     # End draft if over
     if DraftHelper.draft_complete(@round)
       # TODO: Write draft-end time + redirect to show page + next_user set

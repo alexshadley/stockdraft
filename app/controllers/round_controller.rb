@@ -24,11 +24,7 @@ class RoundController < ApplicationController
     @users = User.where(round_id: @round.round_id)
     @drafts = StockDraft.where(round_id: @round.round_id)
 
-    @mins = []
-    @maxes = []
-
     prices = AlpacaReader.get_data(Time.now - 7.days)
-
     @portfolios_by_user = @users.map{|user| [user, portfolio_series_for_user(user, @drafts, prices)]}
     
     if params[:portfolio].nil?
@@ -41,12 +37,16 @@ class RoundController < ApplicationController
       @chart_data = portfolio_prices.map{ |symbol, data|
         first_value = data.values[0]
         normalized = data.map{ |time, value| [time.in_time_zone('America/New_York').strftime('[%B %d, %I:%M]'), value / first_value]}.to_h
-
-        @mins.append(normalized.values.min)
-        @maxes.append(normalized.values.max)
-        
         {name: symbol, data: normalized}
       }
+    end
+
+    @mins = []
+    @maxes = []
+
+    for series in @chart_data
+      @mins.append(series[:data].values.min)
+      @maxes.append(series[:data].values.max)
     end
   end
 

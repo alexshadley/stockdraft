@@ -27,15 +27,24 @@ class RoundController < ApplicationController
     @mins = []
     @maxes = []
 
-    values = AlpacaReader.get_data(Time.now - 5.days)
-    @chart_data = values.map{ |symbol, data|
-      first_value = data.values[0]
-      normalized = data.map{ |time, value| [time.strftime('[%B %d, %I:%M]'), value / first_value]}.to_h
+    prices = AlpacaReader.get_data(Time.now - 5.days)
+    
+    if params[:portfolio].nil?
+    else
+      symbols = @drafts.select{|draft| draft.user_id.to_s == params[:portfolio]}.map{|draft| draft.symbol}
+      puts symbols
 
-      @mins.append(normalized.values.min)
-      @maxes.append(normalized.values.max)
-      
-      {name: symbol, data: normalized}
-    }
+      portfolio_prices = prices.select{|k, v| symbols.include? k}
+      puts portfolio_prices
+      @chart_data = portfolio_prices.map{ |symbol, data|
+        first_value = data.values[0]
+        normalized = data.map{ |time, value| [time.strftime('[%B %d, %I:%M]'), value / first_value]}.to_h
+
+        @mins.append(normalized.values.min)
+        @maxes.append(normalized.values.max)
+        
+        {name: symbol, data: normalized}
+      }
+    end
   end
 end

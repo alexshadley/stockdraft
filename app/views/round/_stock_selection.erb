@@ -1,16 +1,31 @@
 <div id="stock-selection">
   <div class="row justify-content-center">
-    <% for ticker in all_tickers %>
-      <% if !@drafted_tickers.map{|t| t.symbol}.include? ticker %>
-      <div class="card bg-primary">
-        <div class="card-body" data-symbol="<%=ticker%>" data-round_id="<%=@round.round_id%>" data-reflex="click->DraftReflex#pick_stock">
-          <img src=<%= TickerInfo.get_logo_url(ticker) %> style="max-width:100px;max-height:100px;">
-          <p class="card-title"><%= ticker %></p>
-          <p class="card-company-name"><%= TickerInfo.get_company_name(ticker) %></p>
-          </div>
-        </div>
+    <div class="col col-10">
+      <div>
+        <h3>Available</h3>
+      </div>
+      <div class="row">
+        <% for ticker in all_tickers %>
+          <% if !drafted_tickers.map{|t| t.symbol}.include? ticker %>
+          <div class="card bg-primary">
+            <div class="card-body" data-symbol="<%=ticker%>" data-round_id="<%=round.round_id%>" data-reflex="click->DraftReflex#pick_stock">
+              <img src=<%= TickerInfo.get_logo_url(ticker) %> style="max-width:100px;max-height:100px;">
+              <p class="card-title"><%= ticker %></p>
+              <p class="card-company-name"><%= TickerInfo.get_company_name(ticker) %></p>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="col col-2">
+      <h3>Draft Order</h3>
+      <% if users.length > 0 %>
+        <% (0..(users.length * Const::DRAFTS_PER_USER - 1)).each do |i| %>
+          <p><%= i + 1 %>. <%= DraftHelper.current_up_for_draft(i, users).display_name %><% if drafted_tickers.length == i %> <-<% end %></p>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
 
   <div class="row">
@@ -26,14 +41,14 @@
       </thead>
 
       <tbody>
-        <% for drafts in drafted_tickers %>
+        <% drafted_tickers.each_with_index do |draft, index| %>
           <tr>
             <%# TODO(emilia): change the number to 
                 a) draft has a property with the pick number or 
                 b) drafted tickers stored in order, print the loop number %>
-            <td>1.</td>
-            <td><%= drafts.symbol %></td>
-            <td><%= drafts.user_id %></td>
+            <td><%= index + 1 %>.</td>
+            <td><%= draft.symbol %></td>
+            <td><%= draft.user_id %></td>
           </tr>
         <% end %>
       </tbody>

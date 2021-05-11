@@ -4,20 +4,21 @@ module DraftHelper
   end
 
   def self.generate_fake_draft_data(active_round_id, tickers)
-  i = 0
-    for ticker in tickers
-      StockDraft.new(
-        round_id: active_round_id,
-        user_id: i,
-        position_entry_time: Time.now.getutc,
-        symbol: ticker,
-        position_size: 10,
-        per_unit_entry_cost: 20
-      ).save
-      i += 1
-    end
+    i = 0
+      for ticker in tickers
+        StockDraft.new(
+          round_id: active_round_id,
+          user_id: i,
+          position_entry_time: Time.now.getutc,
+          symbol: ticker,
+          position_size: 10,
+          per_unit_entry_cost: 20
+        ).save
+        i += 1
+      end
   end
 
+  
   def self.draft_allowed(active_round_id, drafted_tickers, user, selected_symbol)
     # Returns true if a symbol selection for a given round by 
     # a user is allowed for drafting
@@ -34,7 +35,7 @@ module DraftHelper
     
     # Calculate if symbol is already picked
     picked = false
-    drafted_tickers.each{|pick| picked = picked || pick.symbol == selected_symbol}
+    drafted_tickers.each{|pick| picked = (picked || pick.symbol == selected_symbol)}
     if picked
       return false
     end

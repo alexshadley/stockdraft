@@ -10,7 +10,7 @@ class CreateStockDrafts < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
-    add_index :stock_drafts, :round_id
+    add_index :stock_drafts, [:round_id, :symbol], unique: true
     add_index :stock_drafts, :user_id
   end
 end

@@ -9,6 +9,11 @@ class DraftReflex < ApplicationReflex
 
     # re-query all users
     @users = RoundHelper.users_in_round(@round.round_id)
+
+    cable_ready["draft:#{@round.round_id}"].morph(
+      selector: '#stock-selection',
+      html: render(partial: 'stock_selection', locals: {drafted_tickers: DraftHelper.drafted_tickers(@round.round_id), all_tickers: Tickers.get_tickers, round: @round})
+    ).broadcast
   end
   
   def pick_stock

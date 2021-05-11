@@ -12,7 +12,7 @@ class DraftReflex < ApplicationReflex
 
     cable_ready["draft:#{@round.round_id}"].morph(
       selector: '#stock-selection',
-      html: render(partial: 'stock_selection', locals: {drafted_tickers: DraftHelper.drafted_tickers(@round.round_id), all_tickers: Tickers.get_tickers, round: @round})
+      html: render(partial: 'stock_selection', locals: {drafted_tickers: DraftHelper.drafted_tickers(@round.round_id), all_tickers: Tickers.get_tickers, round: @round, users: @users})
     ).broadcast
   end
   

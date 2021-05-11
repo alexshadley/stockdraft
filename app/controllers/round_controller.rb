@@ -45,8 +45,12 @@ class RoundController < ApplicationController
     @maxes = []
 
     for series in @chart_data
-      @mins.append(series[:data].values.min)
-      @maxes.append(series[:data].values.max)
+      if series[:data].values.length > 0
+        @mins.append(series[:data].values.min)
+      end
+      if series[:data].values.length > 0
+        @maxes.append(series[:data].values.max)
+      end
     end
   end
 
